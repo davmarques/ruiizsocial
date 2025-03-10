@@ -1,0 +1,346 @@
+@media (max-width: 1300px) {
+    header {
+        justify-content: space-between;
+        z-index: 0;
+
+        & .nav {
+            display: none;
+        }
+
+        & .action-btn {
+            display: none;
+        }
+
+        & .menu-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            background: var(--bg-color1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            font-family: "Raleway";
+            font-size: 1.2rem;
+            max-width: 380px;
+
+            & .button {
+                width: 120%;
+            }
+        }
+
+        & .close-button {
+            display: absolute;
+            z-index: 2;
+            color: var(--bg-color1);
+            background-color: var(--btn-color1);
+            margin: 12px;
+        }
+
+        & .content-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 100px;
+        }
+    }
+
+    .main-component {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 4rem 0;
+        gap: 2rem;
+
+        & div {
+            width: 90%;
+            text-align: center;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        & p {
+            width: 90%;
+        }
+
+        & button {
+            margin: auto;
+            width: 60%;
+        }
+
+        & img {
+            width: 80%;
+        }
+    }
+
+    .circle-section {
+        & img {
+            transform: translate(-60%);
+        }
+    }
+
+    .cta-section {
+        & h1 {
+            width: 80%;
+        }
+
+        & button {
+            width: 50%;
+        }
+    }
+
+    .how-it-works {
+        & .content-area {
+            justify-content: space-between;
+            margin: 0 2rem;
+        }
+    }
+
+    footer {
+        & .first-line {
+            justify-content: space-between;
+            margin: 0 3rem;
+        }
+
+        & ul {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+    }
+
+    .filter-container {
+        display: grid;
+        grid-template-columns: (3, 1fr);
+        grid-template-rows: (2, auto);
+        margin-bottom: 1rem;
+    }
+
+    .hero-profissional {
+        flex-direction: column;
+        & .hp-content {
+            text-align: center;
+            width: 80%;
+            & button {
+                margin: auto;
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-table {
+        flex-direction: column;
+
+        & .item-table {
+            width: 70%;
+            text-align: center;
+            margin: 0;
+        }
+    }
+
+    .grid {
+        & .grid-h1 {
+            width: 70vw;
+        }
+
+        & .template-div {
+            width: 70vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        & .reverse {
+            flex-direction: column-reverse !important;
+        }
+    }
+
+    .card-component {
+        margin: 1rem auto;
+
+        .info {
+
+            & img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .cta-buttons {
+            & button {
+                font-size: 1rem;
+                width: 50%;
+            }
+        }
+    }
+
+    .hero-profissional {
+        & .hp-content {
+            & button {
+                width: 50vw;
+            }
+        }
+    }
+
+    .como-funciona-profissional {
+        padding: 3rem 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .how-it-works {
+        & .hiw-h1 {
+            margin-bottom: 3rem;
+        }
+
+        .content-area {
+            flex-direction: column !important;
+            width: 80%;
+            gap: 2rem !important;
+
+            .content {
+                width: 100% !important;
+            }
+        }
+    }
+
+    .circle-section {
+        & img {
+            transform: translateX(-80%);
+        }
+
+        & div {
+            height: auto;
+        }
+
+        & p {
+            padding: 1rem;
+        }
+
+    }
+
+    .card-component {
+
+        .info {
+
+            & img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        .buttons {
+            gap: 1rem;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+
+            & button {
+                font-size: 1rem;
+                width: 100%;
+                margin: auto;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 600px) {
+    .cta-section {
+        & button {
+            width: 70%;
+        }
+    }
+
+
+    footer {
+        & .first-line {
+            flex-direction: column;
+
+            & ul {
+                margin-bottom: 3rem;
+            }
+        }
+
+        & .icon-links {
+            flex-direction: row;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .card-component {
+        width: 90%;
+        & .info {
+            & .info-card {
+                gap: 0.5rem;
+                & h1 {
+                    font-size: 1.5rem;
+                }
+
+                & h2 {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+
+        & .info-row {
+            flex-wrap: wrap;
+        }
+
+        & .buttons {
+            margin-top: 1rem;
+            flex-direction: row-reverse;
+            gap: .5rem;
+            margin: 1rem auto auto auto;
+            align-items: center;
+
+            & .open-button {}
+        }
+
+        & .cta-buttons {
+            flex-direction: row;
+            gap: .5rem;
+            margin: auto;
+
+            & button {
+                font-size: 1rem;
+                width: 50%;
+            }
+        }
+
+    }
+
+    .hero-profissional {
+        & img {
+            width: 400px;
+        }
+    }
+}
+
+
+@media (min-width: 1000px) {
+    .template-div {
+        flex-direction: row !important;
+    }
+
+    .info-row {
+        flex-direction: column;
+    }
+
+
+}
