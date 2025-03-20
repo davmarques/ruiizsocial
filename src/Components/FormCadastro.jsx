@@ -2,35 +2,40 @@
 
 const FormCadastro = () => {
     return (
-        <div className="form-cadastro">
+        <div className="form-cadastro" id="form-cadastro">
                 <h1>Preencha seus dados e junte-se a nós!</h1>
             <form>
-                <input type="text" placeholder="Nome" />
-                <input type="text" placeholder="Sobrenome" />
-                <input type="text" placeholder="Email" />
-                <input type="text" placeholder="Telefone" />
-                <select name="Especialidade" id="">
+                <input type="text" placeholder="Nome" required/>
+                <input type="text" placeholder="Sobrenome" required/>
+                <input type="text" placeholder="Email" required/>
+                <input type="text" placeholder="Telefone" required/>
+                <select name="Especialidade" id="" required>
                     <option value="">Especialidade</option>
                 </select>
-                <input type="text" placeholder="CR" />
-                <select name="AreaAtuacao" id="">
+                <input type="text" placeholder="CR" required/>
+                <select name="AreaAtuacao" id="" required>
                     <option value="">Área de Atuação</option>
                 </select>
-                <select name="genero" id="">
+                <select name="genero" id="" required>
                     <option value="masc">Masculino</option>
                     <option value="fem">Feminino</option>
                 </select>
-                <input type="number" placeholder="Valor da Consulta"/>
-                <select name="PublicoAlvo" id="">
+                <input type="number" placeholder="Valor da Consulta" style={{appearance: 'none'}} required/>
+                <select name="PublicoAlvo" id="" required>
                     <option value="">Público Alvo</option>
                 </select>
-                <label htmlFor="Atendimento"><input type="checkbox" name="Atendimento" id="Atendimento" />Atendimento</label>
-                <input type="text" placeholder="Cidade" />
-                <input type="text" placeholder="Estado" />
-                <input type="text" placeholder="CEP" />
-                <input type="text" placeholder="Descreva você e sua experiência na área da saúde."/>
-            </form>
+                <select name="atendimento" id="atendimento" required>
+                    <option value="presencial">Atendimento</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="remoto">Remoto</option>
+                    <option value="ambos">Ambos</option>
+                </select>
+                <input type="text" placeholder="Cidade" required/>
+                <input type="text" placeholder="Estado" required/>
+                <input type="text" placeholder="CEP" required/>
+                <textarea type="text" placeholder="Descreva você e sua experiência na área da saúde." required/>
                 <button type="submit">Cadastrar</button>
+            </form>
         </div>
     )
 }

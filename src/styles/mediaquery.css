@@ -128,12 +128,23 @@
 
     .hero-profissional {
         flex-direction: column;
+
         & .hp-content {
             text-align: center;
             width: 80%;
+
             & button {
                 margin: auto;
             }
+        }
+    }
+
+    .form-cadastro {
+        & form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50vw;
         }
     }
 }
@@ -192,12 +203,40 @@
         }
     }
 
+    .atender-div {
+        & button {
+            width: 80vw;
+        }
+    }
+
     .como-funciona-profissional {
         padding: 3rem 0;
         justify-content: center;
         align-items: center;
+
+        & button {
+            width: 80vw;
+        }
     }
 
+    .form-cadastro {
+        & form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 80vw;
+        }
+    }
+
+    .fazerparte-div {
+        padding: 3rem 0;
+        justify-content: center;
+        align-items: center;
+
+        & button {
+            width: 80vw;
+        }
+    }
 }
 
 @media (max-width: 800px) {
@@ -257,6 +296,12 @@
         }
     }
 
+    .fazerparte-div {
+        & img {
+            display: none;
+        }
+    }
+
 }
 
 @media (max-width: 600px) {
@@ -284,9 +329,11 @@
 
     .card-component {
         width: 90%;
+
         & .info {
             & .info-card {
                 gap: 0.5rem;
+
                 & h1 {
                     font-size: 1.5rem;
                 }
@@ -309,7 +356,6 @@
             margin: 1rem auto auto auto;
             align-items: center;
 
-            & .open-button {}
         }
 
         & .cta-buttons {
@@ -322,7 +368,6 @@
                 width: 50%;
             }
         }
-
     }
 
     .hero-profissional {

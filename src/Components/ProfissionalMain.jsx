@@ -18,7 +18,7 @@ const ProfissionalMain = () => {
                 <div className="hp-content">
                     <h1>Junte-se à Ruiiz Social hoje mesmo!</h1>
                     <p>Venha fazer parte do serviço de atendimento social online!</p>
-                    <button>Inscrever-se</button>
+                    <a href="#form-cadastro">Inscreva-se</a>
                 </div>
             </div>
             
@@ -31,11 +31,11 @@ const ProfissionalMain = () => {
                 </div>
                 <div className="atender-item">
                     <img src={profissional4} alt="" />
-                    <p>Receba seu pagamento de forma prática e segura</p>
+                    <p>Combine o pagamento direto com o paciente através do WhatsApp</p>
                 </div>
                 <div className="atender-item">
                     <img src={profissional5} alt="" />
-                    <p>Atenda pacientes de qualquer lugar do Brasil</p>
+                    <p>Atenda pacientes de qualquer lugar do mundo</p>
                 </div>
                 <div className="atender-item">
                     <img src={profissional6} alt="" />
@@ -44,7 +44,7 @@ const ProfissionalMain = () => {
                 </div>
              
                 <h2>Você tem autonomia para definir sua agenda e personalizar o atendimento aos seus pacientes, com valores acessíveis para todos.</h2>
-                <button>Quero atender na Ruiiz Social</button>
+                <a href="#form-cadastro">Quero atender na Ruiiz Social</a>
             </div>
 
             <div className="como-funciona-profissional">
@@ -62,7 +62,7 @@ const ProfissionalMain = () => {
                     <h1>3</h1>
                     <p>No horário combinado, realize o atendimento através do aplicativo a sua escolha.</p>
                 </div>
-                <button>Cadastre-se</button>
+                <a href="#form-cadastro">Cadastre-se</a>
             </div>
 
             <div className="fazerparte-div">
@@ -79,8 +79,7 @@ const ProfissionalMain = () => {
                     <h1>3</h1>
                     <p>Assim que o cadastro estiver concluído e verificado, colocamos seu perfil no ar em minutos.</p>
                 </div>
-                <button>Cadastre-se</button>
-                <img src={circle} alt="" />
+                <a href="#form-cadastro">Cadastre-se</a>
             </div>
         </main>
     )

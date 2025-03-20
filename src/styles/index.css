@@ -640,7 +640,7 @@ footer {
             font-size: 1.6rem;
         }
 
-        & button {
+        & a {
             font-family: "Open Sans";
             background-color: var(--btn-color2);
             color: var(--bg-color1);
@@ -649,6 +649,8 @@ footer {
             border-radius: 12px;
             border: none;
             width: 20vw;
+            text-decoration: none;
+            text-align: center;
 
             &:hover {
                 color: var(--btn-color1);
@@ -715,7 +717,7 @@ footer {
         font-weight: 400;
     }
 
-    & button {
+    & a {
         font-family: "Open Sans";
         background-color: var(--btn-color2);
         color: var(--bg-color1);
@@ -724,6 +726,8 @@ footer {
         border-radius: 12px;
         border: none;
         width: 40vw;
+        text-decoration: none;
+        text-align: center;
 
         &:hover {
             color: var(--btn-color1);
@@ -743,7 +747,7 @@ footer {
     padding: 3rem 7rem;
     background-color: var(--bg-color2);
     gap: 3rem;
-    overflow-x: hidden;
+    overflow: hidden;
 
     & img {
         width: 400px;
@@ -759,7 +763,7 @@ footer {
         color: var(--btn-color1);
         text-align: center;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     & .item {
@@ -790,7 +794,7 @@ footer {
         }
     }
 
-    & button {
+    & a {
         font-family: "Open Sans";
         background-color: var(--btn-color2);
         color: var(--bg-color1);
@@ -800,6 +804,8 @@ footer {
         border: none;
         width: 40vw;
         margin: auto;
+        text-decoration: none;
+        text-align: center;
 
         &:hover {
             color: var(--btn-color1);
@@ -828,15 +834,16 @@ footer {
         position: absolute;
         margin: 2rem 0;
         transform: translate(-75%, 120%);
+        display: none;
     }
 
     & h1 {
         font-family: "Open Sans";
         font-size: 2.4rem;
         color: var(--btn-color1);
-        text-align: center;
+        text-align: start;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     & .item {
@@ -867,7 +874,7 @@ footer {
         }
     }
 
-    & button {
+    & a {
         font-family: "Open Sans";
         background-color: var(--btn-color2);
         color: var(--bg-color1);
@@ -877,6 +884,8 @@ footer {
         border: none;
         width: 40vw;
         margin: auto;
+        text-decoration: none;
+        text-align: center;
 
         &:hover {
             color: var(--btn-color1);
@@ -892,12 +901,14 @@ footer {
     display: flex;
     flex-direction: column;
     margin: 4rem 0;
+
     & h1 {
         font-family: Raleway;
         font-weight: 400;
         text-align: center;
         margin: 3rem;
     }
+
     & form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -910,7 +921,9 @@ footer {
             border: 1px solid var(--bg-color2);
             border-radius: 12px;
             color: var(--text-color);
-       
+            background-color: var(--bg-color1);
+            font-size: 1.2rem;
+
             &::placeholder {
                 color: var(--text-color);
                 font-family: Raleway;
@@ -918,18 +931,37 @@ footer {
             }
         }
 
-        
+
 
         & select {
             padding: 1rem;
             border: 1px solid var(--bg-color2);
-            border-radius: 12px; 
+            border-radius: 12px;
             font-family: Raleway;
             font-size: 1.2rem;
+            background-color: var(--bg-color1);
         }
 
-        
+        & textarea {
+            grid-column: span 2;
+            border: 1px solid var(--bg-color2);
+            border-radius: 12px;
+            font-family: Raleway;
+            font-size: 1.2rem;
+            resize: vertical;
+            width: 100%;
+            height: auto;
+            background-color: var(--bg-color1);
+            padding: 1rem;
+
+            &::placeholder {
+                color: var(--text-color);
+                font-family: Raleway;
+                font-size: 1.2rem;
+            }
+        }
     }
+
     & button {
         font-family: "Open Sans";
         background-color: var(--btn-color2);
@@ -940,6 +972,8 @@ footer {
         border: none;
         width: 40vw;
         margin: auto;
+        grid-column: span 2;
+
 
         &:hover {
             color: var(--btn-color1);

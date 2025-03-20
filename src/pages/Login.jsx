@@ -1,14 +1,17 @@
 import '../styles/index.css'
 import '../styles/mediaquery.css'	
 import Header from '../Components/Header'
-import MainComponent from '../Components/MainComponent'
 import Footer from '../Components/Footer'
+import LoginForm from '../Components/LoginForm'
 
-const Empresa = () => {
+const Login = () => {
   return (
     <>
+    <Header />
+    <LoginForm />
+    <Footer />
     </>
   )
 }
 
-export default Empresa
+export default Login

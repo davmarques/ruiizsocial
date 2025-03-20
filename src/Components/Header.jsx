@@ -14,9 +14,10 @@ const Header = () => {
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/paciente">Sou Paciente</Link></li>
                         <li><Link to="/profissional">Sou Profissional</Link></li>
+                        <li><Link to="/laboratorios">Laboratórios e Academias</Link></li>
                     </ul>
                 </nav>
-                <button className="action-btn">Agendar Consulta</button>
+                <Link to="/login"><button>Login</button></Link>
 
 
             <button className="menu-button close-button" onClick={() => setIsOpen(!isOpen)}>
@@ -28,7 +29,8 @@ const Header = () => {
                     <Link to='/'>Home</Link>
                     <Link to='/paciente'>Sou Paciente</Link>
                     <Link to='/profissional'>Sou Profissional</Link>
-                    <button className="button">Agendar Consulta</button>
+                    <Link to='/laboratorios'>Laboratórios</Link>
+                    <Link to="/login"><button>Login</button></Link>
                 </div>
             )}
         </header>

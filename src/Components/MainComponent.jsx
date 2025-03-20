@@ -9,6 +9,8 @@ import home3 from '../assets/imgs/home3.svg'
 import home4 from '../assets/imgs/home4.svg'
 import home5 from '../assets/imgs/home5.svg'
 import home6 from '../assets/imgs/home6.svg'
+import { Link } from "react-router-dom"
+
 
 const MainComponent = () => {
     return (
@@ -17,7 +19,7 @@ const MainComponent = () => {
                 <div>
                     <h1>Saúde acessível e conectada para todos</h1>
                     <p>Cuide da sua saúde onde estiver. Agende sua consulta online com os médicos, psicólogos e outros especialistas.</p>
-                    <button>Agendar Consulta</button>
+                    <Link to="/login"><button>Agendar Consulta</button></Link>
                 </div>
                 <img src={mainImg} alt="" />
             </div>
@@ -45,7 +47,7 @@ const MainComponent = () => {
                 <div>
                     <p>Conectamos você à saúde, de forma fácil e acessível.
                     </p>
-                    <p>No <strong>RuizHealth Social</strong>, você encontra profissionais de saúde qualificados, como médicos, psicólogos, nutricionistas e fisioterapeutas, prontos para atender online e <strong>cuidar da sua saúde</strong>.</p>
+                    <p>Na <strong>Ruiiz Social</strong>, você encontra profissionais de saúde qualificados, e etc, prontos para atender online e <strong>cuidar da sua saúde</strong>.</p>
                 </div>
             </div>
 
@@ -119,7 +121,7 @@ const MainComponent = () => {
 
             <div className="cta-section">
                 <h1>RuizHealth Social: Sua saúde em primeiro lugar!</h1>
-                <button>Consulte um profissional de saúde agora</button>
+                <Link to="/login"><button>Consulte um profissional de saúde agora</button></Link>
             </div>
 
             <div className="how-it-works">
