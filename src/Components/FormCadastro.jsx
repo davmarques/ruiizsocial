@@ -8,7 +8,7 @@ const FormCadastro = () => {
                 <input type="text" placeholder="Nome" required/>
                 <input type="text" placeholder="Sobrenome" required/>
                 <input type="text" placeholder="Email" required/>
-                <input type="text" placeholder="Telefone" required/>
+                <input type="text" placeholder="Telefone (WhatsApp)" required/>
                 <select name="Especialidade" id="" required>
                     <option value="">Especialidade</option>
                 </select>

@@ -32,6 +32,13 @@ header {
         height: 150px;
     }
 
+    nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+    }
+
     & ul {
         display: flex;
         flex-direction: row;
@@ -621,6 +628,7 @@ footer {
 
     & img {
         width: 500px;
+        border-radius: 24px;
     }
 
     & .hp-content {
@@ -696,6 +704,8 @@ footer {
 
             & img {
                 width: 300px;
+                height: 300px;
+                border-radius: 20px;
             }
 
             & p {
@@ -982,5 +992,68 @@ footer {
             transition: all ease .3s;
         }
 
+    }
+}
+
+.login-form {
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color2);
+    width: 30vw;
+    padding: 2rem;
+    border-radius: 12px;
+    gap: 1rem;
+
+    & h2 {
+        font-family: "Open Sans";
+        font-size: 2.4rem;
+        color: var(--btn-color1);
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    & input {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+        width: 25rem;
+        border: 1px solid var(--bg-color2);
+        border-radius: 12px;
+        color: var(--text-color);
+        background-color: var(--bg-color1);
+        font-family: "Open Sans";
+        margin-bottom: 1rem;
+    }
+
+    & button {
+        font-family: "Open Sans";
+        background-color: var(--btn-color2);
+        color: var(--bg-color1);
+        font-size: 1.6rem;
+        padding: 1rem;
+        border: none;
+        border-radius: 12px;
+        width: 15vw;
+        margin-bottom: 1rem;
+
+        &:hover {
+            color: var(--btn-color1);
+            background-color: var(--bg-color2);
+            cursor: pointer;
+            transition: all ease .3s;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-family: "Raleway";
+        font-size: 1.2rem;
+
+        &:hover {
+            color: var(--btn-color1);
+        }
     }
 }

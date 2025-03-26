@@ -16,8 +16,8 @@ const Header = () => {
                         <li><Link to="/profissional">Sou Profissional</Link></li>
                         <li><Link to="/laboratorios">Laboratórios e Academias</Link></li>
                     </ul>
-                </nav>
                 <Link to="/login"><button>Login</button></Link>
+                </nav>
 
 
             <button className="menu-button close-button" onClick={() => setIsOpen(!isOpen)}>
