@@ -3,161 +3,181 @@ import { useSearchParams } from 'react-router-dom'
 import Filter from '../Components/Filter'
 import '../styles/index.css'
 import '../styles/mediaquery.css'
+import api from './api'
 
-const FilterComponent = () => {
+function removerAcentos(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+const FilterComponent = ({ setResultsProfissionais, setResultsEmpresas, searchType }) => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [results, setResults] = useState([])
     const [filterOptions, setFilterOptions] = useState({
-        especialidade: ["Médicos", "Psicólogos", "Nutricionistas", "Fisioterapeutas"],
-        publicoAlvo: ["Pediatria", "Geriatria", "Adulto"],
-        faixaPreco: ["Até R$50", "R$50 - R$100", "Acima de R$100"],
-        genero: ["Masculino", "Feminino"],
-        atendimento: ["Online", "Presencial"],
-        localizacao: ["São Paulo", "Rio de Janeiro"],
+        especialidade: [
+            "Acupuntura",
+            "Alergia e Imunologia",
+            "Anestesia",
+            "Angiologia",
+            "Cardiologia",
+            "Cirurgia",
+            "Clínica Médica",
+            "Coloproctologia",
+            "Dermatologia",
+            "Endocrinologia",
+            "Endoscopia",
+            "Gastroenterologia",
+            "Fisioterapia",
+            "Geriatria",
+            "Ginecologia e Obstetrícia",
+            "Hematologia e Hemoterapia",
+            "Homeopatia",
+            "Infectologia",
+            "Mastologia",
+            "Medicina do Trabalho",
+            "Medicina Esportiva",
+            "Medicina Intensiva",
+            "Medicina Preventiva",
+            "Nefrologia",
+            "Neurologia",
+            "Nutrição",
+            "Nutrologia",
+            "Oftalmologia",
+            "Oncologia Clínica",
+            "Ortopedia e Traumatologia",
+            "Otorrinolaringologia",
+            "Patologia",
+            "Pediatria",
+            "Pneumologia",
+            "Psicologia",
+            "Psiquiatria",
+            "Radiologia",
+            "Radioterapia",
+            "Reumatologia",
+            "Urologia"
+        ],
+        valor: ["Até R$50", "R$50 - R$100", "Acima de R$100"],
+        genero: ["Masculino", "Feminino", "Outros"],
+        atendimento: ["Remoto", "Presencial", "Ambos"],
+        estado: [
+            "Acre",
+            "Alagoas",
+            "Amapá",
+            "Amazonas",
+            "Bahia",
+            "Ceará",
+            "Distrito Federal",
+            "Espírito Santo",
+            "Goiás",
+            "Maranhão",
+            "Mato Grosso",
+            "Mato Grosso do Sul",
+            "Minas Gerais",
+            "Pará",
+            "Paraíba",
+            "Paraná",
+            "Pernambuco",
+            "Piauí",
+            "Rio de Janeiro",
+            "Rio Grande do Norte",
+            "Rio Grande do Sul",
+            "Rondônia",
+            "Roraima",
+            "Santa Catarina",
+            "São Paulo",
+            "Sergipe",
+            "Tocantins"
+        ],
     });
 
 
-    const filters = {
-        especialidade: searchParams.get("especialidade") || "",
-        publicoAlvo: searchParams.get("publicoAlvo") || "",
-        faixaPreco: searchParams.get("faixaPreco") || "",
-        genero: searchParams.get("genero") || "",
-        atendimento: searchParams.get("atendimento") || "",
-        localizacao: searchParams.get("localizacao") || "",
-    };
+    // const filters = {
+    //     especialidade: searchParams.get("especialidade") || "",
+    //     faixaPreco: searchParams.get("valor") || "",
+    //     genero: searchParams.get("genero") || "",
+    //     atendimento: searchParams.get("atendimento") || "",
+    //     localizacao: searchParams.get("estado") || "",
+    // };
 
 
 
     useEffect(() => {
-        const profissionais = [
-            {
-                id: 1,
-                name: "Dr. João",
-                especialidade: "Médicos",
-                faixaPreco: "Até R$50",
-                localizacao: "São Paulo",
-                atendimento: "Online",
-                genero: "Masculino",
-                publicoAlvo: "Pediatria"
-            },
-            {
-                id: 2,
-                name: "Dra. Maria",
-                especialidade: "Psicólogos",
-                faixaPreco: "R$50 - R$100",
-                localizacao: "Rio de Janeiro",
-                atendimento: "Presencial",
-                genero: "Feminino",
-                publicoAlvo: "Pediatria"
-            },
-            {
-                id: 3,
-                name: "Dr. Pedro",
-                especialidade: "Nutricionistas",
-                faixaPreco: "Acima de R$100",
-                localizacao: "São Paulo",
-                atendimento: "Online",
-                genero: "Masculino",
-                publicoAlvo: "Geriatria"
-            },
-            {
-                id: 4,
-                name: "Dra. Ana",
-                especialidade: "Fisioterapeutas",
-                faixaPreco: "R$50 - R$100",
-                localizacao: "Rio de Janeiro",
-                atendimento: "Online",
-                genero: "Feminino",
-                publicoAlvo: "Adulto"
-            },
-        ];
+        const fetchData = async () => {
+            let apiUrl = '';
+            let setResultsFunction = null;
+            if (searchType === 'profissional') {
+                apiUrl = '/profissional';
+                setResultsFunction = setResultsProfissionais;
+            } else if (searchType === 'empresa') {
+                apiUrl = '/empresas';
+                setResultsFunction = setResultsEmpresas;
+            }
 
-        const filteredData = profissionais.filter((prof) => {
-            return Object.keys(filters).every(key => {
-                return filters[key] ? prof[key] === filters[key] : true;
-            });
-        });
-
-        setResults(filteredData);
-    }, [searchParams]);
+            if (apiUrl && setResultsFunction) {
+                try {
+                    const { data } = await api.get(apiUrl, { params: Object.fromEntries(searchParams) });
+                    setResultsFunction(data);
+                } catch (error) {
+                    console.error(`Erro ao buscar ${searchType}`, error);
+                }
+            }
+        };
+        fetchData();
+    }, [searchParams, setResultsProfissionais, setResultsEmpresas, searchType]);
 
     const handleFilterChange = (filterName, value) => {
+        const normalizedValue = value ? removerAcentos(value).toLowerCase() : '';
         setSearchParams((prev) => {
             const newParams = new URLSearchParams(prev);
-            if (value) {
-                newParams.set(filterName, value);
-            } else {
-                newParams.delete(filterName);
+            if (searchType === 'profissional') {
+                if (normalizedValue) {
+                    newParams.set(filterName, normalizedValue);
+                } else {
+                    newParams.delete(filterName);
+                }
+            } else if (searchType === 'empresa') {
+                if (filterName === 'estado') {
+                    if (normalizedValue) {
+                        newParams.set(filterName, normalizedValue);
+                    } else {
+                        newParams.delete(filterName);
+                    }
+                } else if (newParams.has(filterName) && filterName !== 'estado') {
+                    newParams.delete(filterName);
+                }
             }
+            newParams.set('searchType', searchType);
             return newParams;
         });
-
-        if (!value) {
-            setFilterOptions(prev => ({
-                ...prev,
-                [filterName]: prev[filterName]
-            }));
-        }
     }
 
     function formatFilterName(filterName) {
-        
-        if (filterName === 'areaAtuacao') {
-            filterName = 'Área de Atuação'
-        }
-        
-        else if (filterName === 'publicoAlvo') {
-            filterName = 'Público Alvo'
-        }
-
-        else if (filterName === 'faixaPreco') {
-            filterName = 'Faixa de Preço'
-        }
-        
-        else if (filterName === 'genero') {
-            filterName = 'Gênero'
-        }
-        
-        else if (filterName === 'localizacao') {
-            filterName = 'Localização'
-        }
-
-        filterName = filterName.replace(/([a-z])([A-Z])/g, '$1 $2')
-        
-        filterName = filterName.toLowerCase()
-
-        filterName = filterName.charAt(0).toUpperCase() + filterName.slice(1);
-
-        
-
-       
-
-        return filterName
+        let formattedName = filterName.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+        formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+        if (filterName === 'valor') return 'Faixa de Preço';
+        if (filterName === 'estado') return 'Localização';
+        return formattedName;
     }
 
     return (
         <div className='filter-div'>
-            {Object.keys(filterOptions).map(filterName => (
+            {searchType === 'profissional' && (
+                <>
+                    <Filter key="especialidade" label={formatFilterName("especialidade")} options={filterOptions.especialidade} onChange={(value) => handleFilterChange("especialidade", value)} />
+                    <Filter key="valor" label={formatFilterName("valor")} options={filterOptions.valor} onChange={(value) => handleFilterChange("valor", value)} />
+                    <Filter key="genero" label={formatFilterName("genero")} options={filterOptions.genero} onChange={(value) => handleFilterChange("genero", value)} />
+                    <Filter key="atendimento" label={formatFilterName("atendimento")} options={filterOptions.atendimento} onChange={(value) => handleFilterChange("atendimento", value)} />
+                    <Filter key="estado" label={formatFilterName("estado")} options={filterOptions.estado} onChange={(value) => handleFilterChange("estado", value)} />
+                </>
+            )}
+            {searchType === 'empresa' && (
                 <Filter
-                    key={filterName}
-                    label={formatFilterName(filterName)}
-                    options={filterOptions[filterName]}
-                    onChange={(value) => handleFilterChange(filterName, value)}
+                    key="estado"
+                    label="Localização"
+                    options={filterOptions.estado}
+                    onChange={(value) => handleFilterChange("estado", value)}
                 />
-            ))}
-
-            {/* <h3>Resultados:</h3>
-            <ul>
-                {results.length > 0 ? (
-                    results.map((item) => <li key={item.id}>{item.name}</li>)
-                )
-
-                    : (<p>Nenhum profissional encontrado.</p>
-                    )}
-
-            </ul> */}
+            )}
         </div>
-    )
+    );
 }
 
 export default FilterComponent

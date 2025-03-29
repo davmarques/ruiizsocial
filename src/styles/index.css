@@ -952,6 +952,12 @@ footer {
             background-color: var(--bg-color1);
         }
 
+        & .inputFile {
+            grid-column: span 2;
+            font-family: Raleway;
+
+        }
+
         & textarea {
             grid-column: span 2;
             border: 1px solid var(--bg-color2);

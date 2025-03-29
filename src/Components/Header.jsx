@@ -16,7 +16,7 @@ const Header = () => {
                         <li><Link to="/profissional">Sou Profissional</Link></li>
                         <li><Link to="/laboratorios">Laboratórios e Academias</Link></li>
                     </ul>
-                <Link to="/login"><button>Login</button></Link>
+                {/* <Link to="/login"><button>Login</button></Link> */}
                 </nav>
 
 
@@ -30,7 +30,7 @@ const Header = () => {
                     <Link to='/paciente'>Sou Paciente</Link>
                     <Link to='/profissional'>Sou Profissional</Link>
                     <Link to='/laboratorios'>Laboratórios</Link>
-                    <Link to="/login"><button>Login</button></Link>
+                    {/* <Link to="/login"><button>Login</button></Link> */}
                 </div>
             )}
         </header>

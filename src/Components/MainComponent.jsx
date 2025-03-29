@@ -19,7 +19,7 @@ const MainComponent = () => {
                 <div>
                     <h1>Saúde acessível e conectada para todos</h1>
                     <p>Cuide da sua saúde onde estiver. Agende sua consulta online com os médicos, psicólogos e outros especialistas.</p>
-                    <Link to="/login"><button>Agendar Consulta</button></Link>
+                    <Link to="/paciente"><button>Agendar Consulta</button></Link>
                 </div>
                 <img src={mainImg} alt="" />
             </div>
@@ -121,7 +121,7 @@ const MainComponent = () => {
 
             <div className="cta-section">
                 <h1>RuizHealth Social: Sua saúde em primeiro lugar!</h1>
-                <Link to="/login"><button>Consulte um profissional de saúde agora</button></Link>
+                <Link to="/paciente"><button>Consulte um profissional de saúde agora</button></Link>
             </div>
 
             <div className="how-it-works">

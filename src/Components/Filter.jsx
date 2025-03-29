@@ -1,8 +1,8 @@
 import '../styles/index.css'
 import '../styles/mediaquery.css'
-import { IoIosArrowForward } from 'react-icons/io';
 
 const Filter = ({ label, options, onChange }) => {
+    console.log(`Prop onChange recebida para ${label}`)
     return (
         <div className='filter-container'>
             <select className='filter-select' onChange={(e) => onChange(e.target.value)}>

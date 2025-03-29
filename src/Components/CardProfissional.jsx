@@ -1,44 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Profile from '../assets/imgs/profile.webp'
+import api from './api'
+import '../styles/index.css'
+import '../styles/mediaquery.css'
 
-const CardProfissional = () => {
-    const [expanded, setExpanded] = useState(false);
+const CardProfissional = ({ profissional }) => {
+    console.log("Prop PROFISSIONAL recebida", profissional)
+    const [expandedId, setExpandedId] = useState(null);
 
-    const toggleExpand = () => {
-        setExpanded(!expanded);
+
+    const handleOpenWhatApp = (prof) => {
+        const phoneNumber = `55${prof.telefone}`;
+        window.open(`https://wa.me/${phoneNumber}`, "_blank");
+    }
+
+    const toggleExpand = (id) => {
+        setExpandedId(expandedId === id ? null : id);
     };
 
+    if (!profissional) {
+        return null;
+    }
+
     return (
-        <div className={`card-component ${expanded ? 'expanded' : ''}`}>
-            <div className="info-row">
-                <div className="info">
-                    <img src={Profile} alt="" />
-                    <div className="info-card">
-                        <h1>Nome Completo</h1>
-                        <h2>Especialidade</h2>
-                        <h2>CR</h2>
-                        <h2>Público-Alvo</h2>
+        <>
+            <div key={profissional.id} className={`card-component ${expandedId === profissional.id ? 'expanded' : ''}`}>
+                <div className="info-row">
+                    <div className="info">
+                        <img src={profissional.foto || { Profile }} alt="profissional.foto" />
+                        <div className="info-card">
+                            <h1>{profissional.nome} {profissional.sobrenome}</h1>
+                            <h2>{profissional.especialidade?.charAt(0).toUpperCase() + profissional.especialidade?.slice(1)}</h2>
+                            <h2>CR: {profissional.cr}</h2>
+                            <h2>{profissional.cidade}, {profissional.estado}</h2>
+                            <h2>Atendimento: {profissional.atendimento}</h2>
+                        </div>
+                    </div>
+                    <div className="buttons">
+                        <button className='open-button' onClick={() => toggleExpand(profissional.id)} >
+                            <span className={`arrow ${expandedId === profissional.id ? 'rotated' : ''}`}>&#x2B9F;</span>
+                        </button>
+                        <div className="cta-buttons">
+                            <button className='price-button'>R$ {profissional.valor},00</button>
+                            <button onClick={() => handleOpenWhatApp(profissional)} className='wwp-button'>Consultar</button>
+                        </div>
                     </div>
                 </div>
-                <div className="buttons">
-                    <button className='open-button' onClick={toggleExpand} >
-                        <span className={`arrow ${expanded ? 'rotated' : ''}`}>&#x2B9F;</span>
-                    </button>
-                    <div className="cta-buttons">
-                        <button className='price-button'>R$100,00</button>
-                        <button className='wwp-button'>Consultar</button>
+
+
+                {expandedId === profissional.id && (
+                    <div className="info-adicional">
+                        <h2>Sobre mim:</h2>
+                        <p>{profissional.servico}</p>
                     </div>
-                </div>
+                )}
             </div>
 
+        </>
 
-            {expanded && (
-                <div className="info-adicional">
-                    <h2>Sobre mim:</h2>
-                    <p>O consultório estava cheio, como de costume. Pacientes de todas as idades e origens aguardavam ansiosamente para compartilhar suas histórias e queixas. Dona Maria, com seu sorriso gentil e olhar preocupado, falou sobre suas dores nas costas, enquanto Seu João, um senhor de cabelos brancos, descreveu seus problemas de sono. Cada paciente era único, com suas próprias necessidades e preocupações. O médico ouvia atentamente, buscando entender não apenas os sintomas, mas também o contexto de vida de cada um. Era um trabalho desafiador, mas gratificante. Ajudar as pessoas a encontrar alívio para seus sofrimentos e promover a saúde era a missão que o motivava a seguir em frente, todos os dias.</p>
-                </div>
-            )}
-        </div>
+
+
     )
 }
 
