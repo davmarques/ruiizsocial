@@ -126,6 +126,17 @@
         margin-bottom: 1rem;
     }
 
+    .filter-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        flex-wrap: wrap;
+
+        width: 75%;
+        margin: 2rem auto;
+    }
+
     .hero-profissional {
         flex-direction: column;
 
@@ -140,12 +151,46 @@
         }
     }
 
-    .form-cadastro {
-        & form {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 50vw;
+    .card-component {
+        padding: 1.5rem;
+    
+        & .info {
+            & .info-card {
+    
+                & h2 {
+                    font-size: 1.1rem;
+                    color: var(--subtitle-color);
+                    font-weight: 400;
+                }
+            }
+        }
+
+}
+}
+
+@media(max-width: 1100px) {
+    .card-component {
+        margin: 1rem auto;
+
+        .info {
+
+            & img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .cta-buttons {
+            & button {
+                font-size: 1rem;
+                width: 50%;
+            }
+        }
+
+        .empresa-buttons {
+            & .empresa-button {
+                width: 100%;
+            }
         }
     }
 }
@@ -177,24 +222,7 @@
         }
     }
 
-    .card-component {
-        margin: 1rem auto;
-
-        .info {
-
-            & img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        .cta-buttons {
-            & button {
-                font-size: 1rem;
-                width: 50%;
-            }
-        }
-    }
+    
 
     .hero-profissional {
         & .hp-content {
@@ -309,6 +337,7 @@
     .cta-section {
         & a {
             width: 70vw;
+
             & button {
                 width: 70vw;
             }
@@ -379,6 +408,36 @@
             width: 400px;
         }
     }
+
+    .filter-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+        flex-wrap: wrap;
+
+        width: 75%;
+        margin: 2rem auto;
+    }
+
+    .filter-container {
+
+        & select {
+            border-radius: 12px;
+            border: 1px solid var(--bg-color2);
+            text-align: left;
+            padding: .7rem 1rem;
+            width: 80vw;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+
+
+        }
+    }
+
 }
 
 

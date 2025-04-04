@@ -54,7 +54,11 @@ const FilterComponent = ({ setResultsProfissionais, setResultsEmpresas, searchTy
             "Reumatologia",
             "Urologia"
         ],
-        valor: ["Até R$50", "R$50 - R$100", "Acima de R$100"],
+        valor: [
+            { label: "Até R$50", value: "0-50" },
+            { label: "R$50 - R$100", value: "50-100" },
+            { label: "Acima de R$100", value: "100-infinity" },
+          ],
         genero: ["Masculino", "Feminino", "Outros"],
         atendimento: ["Remoto", "Presencial", "Ambos"],
         estado: [
@@ -152,6 +156,7 @@ const FilterComponent = ({ setResultsProfissionais, setResultsEmpresas, searchTy
     function formatFilterName(filterName) {
         let formattedName = filterName.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
         formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+        if(filterName === 'genero') return 'Gênero';
         if (filterName === 'valor') return 'Faixa de Preço';
         if (filterName === 'estado') return 'Localização';
         return formattedName;

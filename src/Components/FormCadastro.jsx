@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from './api'
+import api from './api';
 
 const FormCadastro = () => {
     const [nome, setNome] = useState('');
@@ -15,33 +15,107 @@ const FormCadastro = () => {
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [cep, setCep] = useState('');
-    const [foto, setFoto] = useState('');
+    const [foto, setFoto] = useState(null); // Estado para armazenar o arquivo de imagem
     const [servico, setServico] = useState('');
+    const [estadoSigla, setEstadoSigla] = useState('');
+    const [estadoExtenso, setEstadoExtenso] = useState('');
 
-    const handleSubmit = async (event) => {
-        event.preventDefault
+    const handleImagemChange = (event) => {
+        setFoto(event.target.files[0]);
+    };
 
-        const novoProfissional = {
-            nome,
-            sobrenome,
-            email,
-            telefone,
-            especialidade,
-            cr,
-            genero,
-            valor,
-            publicoAlvo,
-            atendimento,
-            cidade,
-            estado,
-            cep,
-            foto,
-            servico,
+    const estados = {
+        AC: 'Acre',
+        AL: 'Alagoas',
+        AP: 'Amapá',
+        AM: 'Amazonas',
+        BA: 'Bahia',
+        CE: 'Ceará',
+        DF: 'Distrito Federal',
+        ES: 'Espírito Santo',
+        GO: 'Goiás',
+        MA: 'Maranhão',
+        MT: 'Mato Grosso',
+        MS: 'Mato Grosso do Sul',
+        MG: 'Minas Gerais',
+        PA: 'Pará',
+        PB: 'Paraíba',
+        PR: 'Paraná',
+        PE: 'Pernambuco',
+        PI: 'Piauí',
+        RJ: 'Rio de Janeiro',
+        RN: 'Rio Grande do Norte',
+        RS: 'Rio Grande do Sul',
+        RO: 'Rondônia',
+        RR: 'Roraima',
+        SC: 'Santa Catarina',
+        SP: 'São Paulo',
+        SE: 'Sergipe',
+        TO: 'Tocantins',
+    };
+
+    const buscarEndereco = async () => {
+        const cepLimpo = cep.replace(/\D/g, '');
+        if (cepLimpo.length !== 8) {
+            alert('CEP inválido.');
+            setCidade('');
+            setEstadoSigla('');
+            setEstadoExtenso('');
+            return;
         }
 
         try {
-            const response = await api.post('/profissional', novoProfissional);
-            console.log('Empresa cadastrada com sucesso: ', response.data)
+            const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+            const data = await response.json();
+            if (data.erro) {
+                alert('CEP não encontrado.');
+                setCidade('');
+                setEstadoSigla('');
+                setEstadoExtenso('');
+                return;
+            }
+            setCidade(data.localidade);
+            setEstadoSigla(data.uf);
+            setEstadoExtenso(estados[data.uf] || '');
+        } catch (error) {
+            console.error('Erro ao buscar CEP:', error);
+            alert('Erro ao buscar CEP. Tente novamente.');
+            setCidade('');
+            setEstadoSigla('');
+            setEstadoExtenso('');
+        }
+    };
+    
+    const handleSubmit = async (event) => {
+        console.log("Valor de nome ao submeter:", nome); // Adicione esta linha
+
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('nome', nome);
+        formData.append('sobrenome', sobrenome);
+        formData.append('email', email);
+        formData.append('telefone', telefone);
+        formData.append('especialidade', especialidade);
+        formData.append('cr', cr);
+        formData.append('genero', genero);
+        formData.append('valor', valor);
+        formData.append('publicoAlvo', publicoAlvo);
+        formData.append('atendimento', atendimento);
+        formData.append('cidade', cidade);
+        formData.append('estado', estadoSigla); // Envia a sigla do estado para o backend
+        formData.append('cep', cep);
+        if (foto) {
+            formData.append('foto', foto); // Anexa o arquivo de imagem ao FormData
+        }
+        formData.append('servico', servico);
+
+        try {
+            const response = await api.post('/profissional', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log('Dados enviados com sucesso!', response.data);
             setNome('');
             setSobrenome('');
             setEmail('');
@@ -55,14 +129,14 @@ const FormCadastro = () => {
             setCidade('');
             setEstado('');
             setCep('');
-            setFoto('');
+            setFoto(null);
             setServico('');
-
+            // Limpar o formulário ou redirecionar o usuário
         } catch (error) {
-            console.error('Erro ao adicionar profissional: ', error);
+            console.error('Erro ao enviar dados:', error);
+            // Exibir mensagem de erro para o usuário
         }
-    }
-
+    };
 
     return (
         <div className="form-cadastro" id="form-cadastro">
@@ -77,7 +151,7 @@ const FormCadastro = () => {
                 <input type="number" placeholder="Telefone" id="telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
 
                 <select name="especialidade" id="especialidade" placeholder="Especialidade" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required>
-                    <option value="" id="especialidade">Especialidade</option>
+                    <option value="" id="">Especialidade</option>
                     <option value="acupuntura" id="acupuntura">Acupuntura</option>
                     <option value="alergia_imunologia" id="alergia_imunologia">Alergia e Imunologia</option>
                     <option value="anestesia" id="anestesia">Anestesia</option>
@@ -123,33 +197,36 @@ const FormCadastro = () => {
                 <input type="number" placeholder="C.R." id="cr" value={cr} onChange={(e) => setCr(e.target.value)} required />
 
                 <select name="genero" id="genero" placeholder="Gênero" value={genero} onChange={(e) => setGenero(e.target.value)} required>
+                    <option value="" id="">Gênero</option>
                     <option value="masculino" id="masculino">Masculino</option>
                     <option value="feminino" id="feminino">Feminino</option>
-                    <option value="outro" id="outro">Outro</option>
+                    <option value="outros" id="outro">Outro</option>
                 </select>
 
                 <input type="valor" placeholder="Valor da Consulta" id="valor" value={valor} onChange={(e) => setValor(e.target.value)} required />
 
                 <select name="atendimento" id="atendimento" placeholder="Atendimento" value={atendimento} onChange={(e) => setAtendimento(e.target.value)} required>
+                    <option value="" id="">Atendimento</option>
                     <option value="presencial" id="presencial">Presencial</option>
                     <option value="remoto" id="remoto">Remoto</option>
                     <option value="ambos" id="ambos">Presencial e Remoto</option>
                 </select>
 
-                <input type="text" placeholder="Cidade" id="cidade" value={cidade} onChange={(e) => setCidade(e.target.value)} required />
+                <input type="text" placeholder="CEP" id="cep" value={cep} onChange={(e) => setCep(e.target.value)} onBlur={buscarEndereco} required />
 
-                <input type="text" placeholder="Estado" id="estado" value={estado} onChange={(e) => setEstado(e.target.value)} required />
+                <input type="text" placeholder="Cidade" id="cidade" value={cidade} onChange={(e) => setCidade(e.target.value)} required readOnly />
 
-                <input type="text" placeholder="CEP" id="cep" value={cep} onChange={(e) => setCep(e.target.value)} required />
+                <input type="text" placeholder="Estado" id="estado" value={estadoExtenso} readOnly />
 
-                <input className="inputFile" type="file" placeholder='Foto de Perfil' id='foto' value={foto} onChange={(e) => setFoto(e.target.value)} required />
+
+                <input className="inputFile" type="file" accept="image/*" placeholder='Foto de Perfil' id='foto' onChange={handleImagemChange} required />
 
                 <textarea type="text" placeholder="Descreva você e sua experiência na área da saúde." id="servico" value={servico} onChange={(e) => setServico(e.target.value)} required />
 
                 <button type="submit">Cadastrar</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default FormCadastro
+export default FormCadastro;

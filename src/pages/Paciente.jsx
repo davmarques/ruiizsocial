@@ -45,7 +45,7 @@ const Paciente = () => {
       <Header />
       <FilterComponent setResultsProfissionais={setResultsProfissionais} setResultsEmpresas={setResultsEmpresas} searchType="profissional" />
       <div className="results-container">
-        <h2>Profissionais</h2>
+        <h2 className='results-h2'>Profissionais</h2>
         {profissionaisParaRenderizar.length > 0 ? (
           <ul>
             {profissionaisParaRenderizar.map((profissional) => (
@@ -55,10 +55,10 @@ const Paciente = () => {
             ))}
           </ul>
         ) : (
-          <p>{hasProfissionalFilters ? 'Nenhum profissional encontrado com os filtros aplicados.' : 'Nenhum profissional encontrado.'}</p>
+          <p className='results-p'>{hasProfissionalFilters ? 'Nenhum profissional encontrado com os filtros aplicados.' : 'Nenhum profissional encontrado.'}</p>
         )}
 
-        <h2>Empresas</h2>
+        <h2 className='results-h2'>Empresas</h2>
         {empresasParaRenderizar.length > 0 ? (
           <ul>
             {empresasParaRenderizar.map((empresa) => (
@@ -68,7 +68,7 @@ const Paciente = () => {
             ))}
           </ul>
         ) : (
-          <p>{hasEmpresaFilter ? 'Nenhuma empresa encontrada com os filtros aplicados.' : 'Nenhuma empresa encontrada.'}</p>
+          <p className='results-p'>{hasEmpresaFilter ? 'Nenhuma empresa encontrada com os filtros aplicados.' : 'Nenhuma empresa encontrada.'}</p>
         )}
       </div>
 

@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Profile from '../assets/imgs/profile.webp'
-import api from './api'
-import '../styles/index.css'
-import '../styles/mediaquery.css'
+import React, { useState } from 'react';
+import Profile from '../assets/imgs/profile.webp';
+import api from './api';
+import '../styles/index.css';
+import '../styles/mediaquery.css';
+
+function substituiUnderline(texto) {
+    return texto.replace(/_/g, " e ");
+}
 
 const CardEmpresa = ({ empresa }) => {
-    console.log("Prop EMPRESA recebida", empresa)
+    console.log("Prop EMPRESA recebida", empresa);
     const [expandedId, setExpandedId] = useState(null);
 
     const handleOpenWhatApp = (emp) => {
@@ -21,40 +25,40 @@ const CardEmpresa = ({ empresa }) => {
         return null;
     }
 
+    // Determine a URL da imagem (use uma imagem padrão para empresas)
+    const imageUrl = empresa.foto ? `http://localhost:3000/${empresa.foto}` : Profile;
+
     return (
         <>
             <div key={empresa.id} className={`card-component ${expandedId === empresa.id ? 'expanded' : ''}`}>
                 <div className="info-row">
                     <div className="info">
-                        <img src={empresa.foto || { Profile }} alt="empresa.foto" />
+                        <img src={imageUrl} alt={empresa.empresa} onError={(e) => { e.target.onerror = null; e.target.src = CompanyLogo }} />
                         <div className="info-card">
                             <h1>{empresa.empresa}</h1>
+                            <h2>{substituiUnderline(empresa.tipo?.charAt(0).toUpperCase() + empresa.tipo?.slice(1))}</h2>
                             <h2>{empresa.cidade}, {empresa.estado}</h2>
                         </div>
                     </div>
-                    <div className="buttons">
+                    <div className="buttons empresa-buttons">
                         <button className='open-button' onClick={() => toggleExpand(empresa.id)} >
                             <span className={`arrow ${expandedId === empresa.id ? 'rotated' : ''}`}>&#x2B9F;</span>
                         </button>
-                        <div className="cta-buttons">
+                        <div className="cta-buttons empresa-button">
                             <button onClick={() => handleOpenWhatApp(empresa)} className='wwp-button'>Consultar</button>
                         </div>
                     </div>
                 </div>
 
-
                 {expandedId === empresa.id && (
                     <div className="info-adicional">
-                        <h2>Serviços</h2>
+                        <h2>Serviços:</h2>
                         <p>{empresa.servico}</p>
                     </div>
                 )}
             </div>
         </>
-
-
-
-    )
+    );
 }
 
-export default CardEmpresa
+export default CardEmpresa;

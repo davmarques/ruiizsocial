@@ -5,17 +5,15 @@ const Filter = ({ label, options, onChange }) => {
     console.log(`Prop onChange recebida para ${label}`)
     return (
         <div className='filter-container'>
-            <select className='filter-select' onChange={(e) => onChange(e.target.value)}>
-                <option className='option-select' value="">
-                    {label}
-                </option>
-                {options && options.map((option) => (
-                    <option key={option} value={option}>
-                        {option}
+            <label>{label}:</label>
+            <select onChange={(e) => onChange(e.target.value)}>
+                <option value="">Todos</option>
+                {options.map((option) => (
+                    <option key={option.value || option} value={option.value || option}>
+                        {option.label || option}
                     </option>
                 ))}
             </select>
-
         </div>
 
     )
