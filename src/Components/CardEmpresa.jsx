@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Profile from '../assets/imgs/profile.webp';
-import api from './api';
 import '../styles/index.css';
 import '../styles/mediaquery.css';
 
@@ -14,7 +13,7 @@ const CardEmpresa = ({ empresa }) => {
 
     const handleOpenWhatApp = (emp) => {
         const phoneNumber = `55${emp.telefone}`;
-        window.open(`https://wa.me/${phoneNumber}`, "_blank");
+        window.open(`https://wa.me/${phoneNumber}?text=Ol%C3%A1,%20vim%20atraves%20da%20Ruiiz%20Social!`, "_blank");
     }
 
     const toggleExpand = (id) => {
@@ -26,7 +25,7 @@ const CardEmpresa = ({ empresa }) => {
     }
 
     // Determine a URL da imagem (use uma imagem padrão para empresas)
-    const imageUrl = empresa.foto ? `http://localhost:3000/${empresa.foto}` : Profile;
+    const imageUrl = empresa.foto ? `http://backendruiizsocial.render.com/profissional/upload/${empresa.foto}` : Profile;
 
     return (
         <>

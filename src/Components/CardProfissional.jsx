@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Profile from '../assets/imgs/profile.webp';
-import api from './api';
 import '../styles/index.css';
 import '../styles/mediaquery.css';
 
@@ -9,12 +8,11 @@ function substituiUnderline(texto) {
 }
 
 const CardProfissional = ({ profissional }) => {
-    console.log("Prop PROFISSIONAL recebida", profissional);
     const [expandedId, setExpandedId] = useState(null);
 
     const handleOpenWhatApp = (prof) => {
         const phoneNumber = `55${prof.telefone}`;
-        window.open(`https://wa.me/${phoneNumber}`, "_blank");
+        window.open(`https://wa.me/${phoneNumber}?text=Ol%C3%A1,%20vim%20atraves%20da%20Ruiiz%20Social!`, "_blank");
     }
 
     const toggleExpand = (id) => {
@@ -26,18 +24,20 @@ const CardProfissional = ({ profissional }) => {
     }
 
     // Determine a URL da imagem
-    const imageUrl = profissional.foto ? `http://localhost:3000/${profissional.foto}` : Profile;
+    const imageUrl = `http://backendruiizsocial.onrender.com/profissional/${profissional.foto}`;
 
     return (
         <>
             <div key={profissional.id} className={`card-component ${expandedId === profissional.id ? 'expanded' : ''}`}>
                 <div className="info-row">
                     <div className="info">
-                        <img src={imageUrl} alt={profissional.nome} onError={(e) => { e.target.onerror = null; e.target.src=Profile}} />
+                        <img src={imageUrl} alt={profissional.nome} onError={(e) => { e.target.onerror = null; e.target.src = Profile }} />
                         <div className="info-card">
                             <h1>{profissional.nome} {profissional.sobrenome}</h1>
                             <h2>{substituiUnderline(profissional.especialidade?.charAt(0).toUpperCase() + profissional.especialidade?.slice(1))}</h2>
-                            <h2>CR: {profissional.cr}</h2>
+                            {profissional.cr !== "123456" && (
+                                <h2>CR: {profissional.cr}</h2>
+                            )}
                             <h2>{profissional.cidade}, {profissional.estado}</h2>
                             <h2>Atendimento: {profissional.atendimento?.charAt(0).toUpperCase() + profissional.atendimento?.slice(1)}</h2>
                         </div>
@@ -47,7 +47,9 @@ const CardProfissional = ({ profissional }) => {
                             <span className={`arrow ${expandedId === profissional.id ? 'rotated' : ''}`}>&#x2B9F;</span>
                         </button>
                         <div className="cta-buttons">
-                            <button className='price-button'>R$ {profissional.valor},00</button>
+                            {profissional.valor !== "0" && (
+                                <button className='price-button'>R$ {profissional.valor},00</button>
+                            )}
                             <button onClick={() => handleOpenWhatApp(profissional)} className='wwp-button'>Consultar</button>
                         </div>
                     </div>

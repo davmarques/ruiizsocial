@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from './api';
+import api from '../api/api'; // Se você já está usando esse arquivo para sua API, não precisa alterar
 
 const FormEmpresa = () => {
     const [empresa, setEmpresa] = useState('');
@@ -79,7 +79,6 @@ const FormEmpresa = () => {
         }
     };
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -92,17 +91,18 @@ const FormEmpresa = () => {
             formData.append('foto', foto);
         }
         formData.append('cidade', cidade);
-        formData.append('estado', estadoSigla); // Agora anexando estadoSigla
+        formData.append('estado', estadoSigla);
         formData.append('cep', cep);
         formData.append('servico', servico);
 
         try {
-            const response = await api.post('/empresas', formData, {
+            // Atualize a URL para o endpoint correto da sua nova API
+            const response = await api.post('/empresas/cadastrar', formData, { // Novo endpoint
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log('Empresa adicionada com sucesso: ', response.data);
+            console.log('Empresa cadastrada com sucesso: ', response.data);
             setEmpresa('');
             setTipo('');
             setEmail('');
@@ -114,10 +114,9 @@ const FormEmpresa = () => {
             setCep('');
             setServico('');
         } catch (error) {
-            console.error('Erro ao adicionar empresa: ', error);
+            console.error('Erro ao cadastrar empresa: ', error);
         }
     };
-
 
     return (
         <div className="form-cadastro" id="form-cadastro">
@@ -140,10 +139,9 @@ const FormEmpresa = () => {
 
                 <input type="text" placeholder="CEP" id="cep" value={cep} onChange={(e) => setCep(e.target.value)} onBlur={(e) => buscarEndereco(e.target.value)} required />
 
-                <input type="text" placeholder="Cidade" id='cidade' value={cidade} onChange={(e) => setCidade(e.target.value)} required readOnly/>
+                <input type="text" placeholder="Cidade" id='cidade' value={cidade} onChange={(e) => setCidade(e.target.value)} required readOnly />
 
-                <input type="text" placeholder="Estado" id='estado' value={estadoExtenso} readOnly/> {/* Removido onChange */}
-
+                <input type="text" placeholder="Estado" id='estado' value={estadoExtenso} readOnly />
 
                 <textarea type="text" placeholder="Descreva os serviços oferecidos." id='servico' value={servico} onChange={(e) => setServico(e.target.value)} required />
 

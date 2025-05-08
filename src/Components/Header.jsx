@@ -8,16 +8,16 @@ const Header = () => {
 
     return (
         <header>
-                <img src={logo} alt="" />
-                <nav className="nav">
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/paciente">Sou Paciente</Link></li>
-                        <li><Link to="/profissional">Sou Profissional</Link></li>
-                        <li><Link to="/laboratorios">Laboratórios e Academias</Link></li>
-                    </ul>
+            <Link to="/"> <img src={logo} alt="" /></Link>
+            <nav className="nav">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/paciente">Sou Paciente</Link></li>
+                    <li><Link to="/profissional">Sou Profissional</Link></li>
+                    <li><Link to="/laboratorios">Laboratórios e Academias</Link></li>
+                </ul>
                 {/* <Link to="/login"><button>Login</button></Link> */}
-                </nav>
+            </nav>
 
 
             <button className="menu-button close-button" onClick={() => setIsOpen(!isOpen)}>

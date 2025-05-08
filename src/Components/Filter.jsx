@@ -2,7 +2,6 @@ import '../styles/index.css'
 import '../styles/mediaquery.css'
 
 const Filter = ({ label, options, onChange }) => {
-    console.log(`Prop onChange recebida para ${label}`)
     return (
         <div className='filter-container'>
             <label>{label}:</label>

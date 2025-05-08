@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import api from './api';
-
+import api from "../api/api";
 const FormCadastro = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [email, setEmail] = useState('');
@@ -10,48 +10,35 @@ const FormCadastro = () => {
     const [cr, setCr] = useState('');
     const [genero, setGenero] = useState('');
     const [valor, setValor] = useState('');
-    const [publicoAlvo, setPublicoAlvo] = useState('');
     const [atendimento, setAtendimento] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
     const [cep, setCep] = useState('');
-    const [foto, setFoto] = useState(null); // Estado para armazenar o arquivo de imagem
+    const [foto, setFoto] = useState(null);
     const [servico, setServico] = useState('');
-    const [estadoSigla, setEstadoSigla] = useState('');
     const [estadoExtenso, setEstadoExtenso] = useState('');
-
-    const handleImagemChange = (event) => {
-        setFoto(event.target.files[0]);
-    };
+    const [fileName, setFileName] = useState("");
+    const [consultaSocial, setConsultaSocial] = useState("");
 
     const estados = {
-        AC: 'Acre',
-        AL: 'Alagoas',
-        AP: 'Amapá',
-        AM: 'Amazonas',
-        BA: 'Bahia',
-        CE: 'Ceará',
-        DF: 'Distrito Federal',
-        ES: 'Espírito Santo',
-        GO: 'Goiás',
-        MA: 'Maranhão',
-        MT: 'Mato Grosso',
-        MS: 'Mato Grosso do Sul',
-        MG: 'Minas Gerais',
-        PA: 'Pará',
-        PB: 'Paraíba',
-        PR: 'Paraná',
-        PE: 'Pernambuco',
-        PI: 'Piauí',
-        RJ: 'Rio de Janeiro',
-        RN: 'Rio Grande do Norte',
-        RS: 'Rio Grande do Sul',
-        RO: 'Rondônia',
-        RR: 'Roraima',
-        SC: 'Santa Catarina',
-        SP: 'São Paulo',
-        SE: 'Sergipe',
-        TO: 'Tocantins',
+        AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia',
+        CE: 'Ceará', DF: 'Distrito Federal', ES: 'Espírito Santo', GO: 'Goiás',
+        MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais',
+        PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí',
+        RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte', RS: 'Rio Grande do Sul',
+        RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SP: 'São Paulo',
+        SE: 'Sergipe', TO: 'Tocantins'
+    };
+
+    const handleImagemChange = (event) => {
+        const file = event.target.files[0];
+        setFoto(file);
+        setFileName(file ? file.name : "")
+    };
+
+    const handleCepChange = (event) => {
+        const newCep = event.target.value.replace(/\D/g, '');
+        setCep(newCep);
     };
 
     const buscarEndereco = async () => {
@@ -59,7 +46,7 @@ const FormCadastro = () => {
         if (cepLimpo.length !== 8) {
             alert('CEP inválido.');
             setCidade('');
-            setEstadoSigla('');
+            setEstado('');
             setEstadoExtenso('');
             return;
         }
@@ -70,26 +57,28 @@ const FormCadastro = () => {
             if (data.erro) {
                 alert('CEP não encontrado.');
                 setCidade('');
-                setEstadoSigla('');
+                setEstado('');
                 setEstadoExtenso('');
                 return;
             }
             setCidade(data.localidade);
-            setEstadoSigla(data.uf);
+            setEstado(data.uf); // Atualiza o estado com a sigla
             setEstadoExtenso(estados[data.uf] || '');
         } catch (error) {
             console.error('Erro ao buscar CEP:', error);
             alert('Erro ao buscar CEP. Tente novamente.');
             setCidade('');
-            setEstadoSigla('');
+            setEstado('');
             setEstadoExtenso('');
         }
     };
-    
-    const handleSubmit = async (event) => {
-        console.log("Valor de nome ao submeter:", nome); // Adicione esta linha
 
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        if (isLoading) return; // Impede envio duplo
+
+        setIsLoading(true); // Começa o carregamento
+
         const formData = new FormData();
         formData.append('nome', nome);
         formData.append('sobrenome', sobrenome);
@@ -99,42 +88,45 @@ const FormCadastro = () => {
         formData.append('cr', cr);
         formData.append('genero', genero);
         formData.append('valor', valor);
-        formData.append('publicoAlvo', publicoAlvo);
         formData.append('atendimento', atendimento);
         formData.append('cidade', cidade);
-        formData.append('estado', estadoSigla); // Envia a sigla do estado para o backend
+        formData.append('estado', estado); // Envia a sigla do estado
         formData.append('cep', cep);
         if (foto) {
-            formData.append('foto', foto); // Anexa o arquivo de imagem ao FormData
+            formData.append('foto', foto);
         }
         formData.append('servico', servico);
 
         try {
-            const response = await api.post('/profissional', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log('Dados enviados com sucesso!', response.data);
-            setNome('');
-            setSobrenome('');
-            setEmail('');
-            setTelefone('');
-            setEspecialidade('');
-            setCr('');
-            setGenero('');
-            setValor('');
-            setPublicoAlvo('');
-            setAtendimento('');
-            setCidade('');
-            setEstado('');
-            setCep('');
-            setFoto(null);
-            setServico('');
-            // Limpar o formulário ou redirecionar o usuário
+            const response = await api.postProfissional(formData);
+
+            if (response.ok) {
+                console.log("Cadastro realizado com sucesso:", await response.json());
+                alert("Cadastro enviado com sucesso!");
+                setNome('');
+                setSobrenome('');
+                setEmail('');
+                setTelefone('');
+                setEspecialidade('');
+                setCr('');
+                setGenero('');
+                setValor('');
+                setAtendimento('');
+                setCidade('');
+                setEstado('');
+                setCep('');
+                setFoto(null);
+                setServico('');
+                setEstadoExtenso('');
+            } else {
+                console.error("Erro ao enviar cadastro:", response.statusText);
+                alert("Erro ao enviar cadastro.");
+            }
         } catch (error) {
-            console.error('Erro ao enviar dados:', error);
-            // Exibir mensagem de erro para o usuário
+            console.error("Erro no envio:", error);
+            alert("Erro ao enviar cadastro.");
+        } finally {
+            setIsLoading(false); // Finaliza carregamento
         }
     };
 
@@ -142,15 +134,12 @@ const FormCadastro = () => {
         <div className="form-cadastro" id="form-cadastro">
             <h1>Preencha seus dados e junte-se a nós!</h1>
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Nome" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                <input type="text" placeholder="Sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} required />
+                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input type="number" placeholder="Telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
 
-                <input type="text" placeholder="Sobrenome" id="sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} required />
-
-                <input type="text" placeholder="Email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-                <input type="number" placeholder="Telefone" id="telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
-
-                <select name="especialidade" id="especialidade" placeholder="Especialidade" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required>
+                <select value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required>
                     <option value="" id="">Especialidade</option>
                     <option value="acupuntura" id="acupuntura">Acupuntura</option>
                     <option value="alergia_imunologia" id="alergia_imunologia">Alergia e Imunologia</option>
@@ -194,39 +183,57 @@ const FormCadastro = () => {
                     <option value="urologia" id="urologia">Urologia</option>
                 </select>
 
-                <input type="number" placeholder="C.R." id="cr" value={cr} onChange={(e) => setCr(e.target.value)} required />
+                <input type="number" placeholder="C.R." value={cr} onChange={(e) => setCr(e.target.value)} required />
 
-                <select name="genero" id="genero" placeholder="Gênero" value={genero} onChange={(e) => setGenero(e.target.value)} required>
-                    <option value="" id="">Gênero</option>
-                    <option value="masculino" id="masculino">Masculino</option>
-                    <option value="feminino" id="feminino">Feminino</option>
-                    <option value="outros" id="outro">Outro</option>
+                <select value={genero} onChange={(e) => setGenero(e.target.value)} required>
+                    <option value="">Gênero</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outros">Outro</option>
                 </select>
 
-                <input type="valor" placeholder="Valor da Consulta" id="valor" value={valor} onChange={(e) => setValor(e.target.value)} required />
+                <div className="consultaSocial">
+                    <p>Realiza consulta social?</p>
+                    <div className="consultaSocial-item">
+                        <label htmlFor="consultaSocial">Sim</label>
+                        <input type="radio" name="consultaSocial" id="consultaSocial-sim" value="sim" checked={consultaSocial === "sim"} onChange={(e) => setConsultaSocial(e.target.value)} />
+                        <label htmlFor="consultaSocial">Não</label>
+                        <input type="radio" name="consultaSocial" id="consultaSocial-nao" value="nao" checked={consultaSocial === "nao"}
+                            onChange={(e) => {
+                                setConsultaSocial(e.target.value);
+                                setValor("");
+                            }
+                            } />
+                    </div>
+                </div>
 
-                <select name="atendimento" id="atendimento" placeholder="Atendimento" value={atendimento} onChange={(e) => setAtendimento(e.target.value)} required>
-                    <option value="" id="">Atendimento</option>
-                    <option value="presencial" id="presencial">Presencial</option>
-                    <option value="remoto" id="remoto">Remoto</option>
-                    <option value="ambos" id="ambos">Presencial e Remoto</option>
+
+                <input type="text" placeholder="Valor da Consulta" value={valor} onChange={(e) => setValor(e.target.value)} disabled={consultaSocial === "nao"} required={consultaSocial === "sim"} />
+
+                <select value={atendimento} onChange={(e) => setAtendimento(e.target.value)} required>
+                    <option value="">Atendimento</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="remoto">Remoto</option>
+                    <option value="ambos">Presencial e Remoto</option>
                 </select>
 
-                <input type="text" placeholder="CEP" id="cep" value={cep} onChange={(e) => setCep(e.target.value)} onBlur={buscarEndereco} required />
+                <input type="text" placeholder="CEP" value={cep} onChange={handleCepChange} onBlur={buscarEndereco} required />
+                <input type="text" placeholder="Cidade" value={cidade} readOnly />
+                <input type="text" placeholder="Estado" value={estadoExtenso} readOnly />
 
-                <input type="text" placeholder="Cidade" id="cidade" value={cidade} onChange={(e) => setCidade(e.target.value)} required readOnly />
+                <div className="inputFile">
+                    <label htmlFor="foto" className="custom-inputFile">{fileName ? `${fileName}` : "Selecione sua foto de perfil"}</label>
+                    <input id="foto" className="inputFileItem" type="file" accept="image/*" onChange={handleImagemChange} />
+                </div>
 
-                <input type="text" placeholder="Estado" id="estado" value={estadoExtenso} readOnly />
 
+                <textarea placeholder="Descreva você e sua experiência" value={servico} onChange={(e) => setServico(e.target.value)} required />
 
-                <input className="inputFile" type="file" accept="image/*" placeholder='Foto de Perfil' id='foto' onChange={handleImagemChange} required />
-
-                <textarea type="text" placeholder="Descreva você e sua experiência na área da saúde." id="servico" value={servico} onChange={(e) => setServico(e.target.value)} required />
-
-                <button type="submit">Cadastrar</button>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Enviando" : "Cadastrar"}
+                </button>
             </form>
         </div>
     );
 };
-
 export default FormCadastro;

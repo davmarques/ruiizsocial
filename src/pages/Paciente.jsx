@@ -7,7 +7,7 @@ import CardProfissional from '../Components/CardProfissional'
 import CardEmpresa from '../Components/CardEmpresa'
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import api from '../Components/api'
+import api from '../api/api'
 
 const Paciente = () => {
 
@@ -20,10 +20,11 @@ const Paciente = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const profData = await api.get('/profissional');
-        setProfissionais(profData.data);
-        const empData = await api.get('./empresas');
-        setEmpresas(empData.data);
+        const profData = await api.get('profissional');
+        setProfissionais(profData);
+
+        const empData = await api.get('empresas');
+        setEmpresas(empData);
       } catch (error) {
         console.error('Erro ao buscar dados iniciais', error);
       }
@@ -46,7 +47,8 @@ const Paciente = () => {
       <FilterComponent setResultsProfissionais={setResultsProfissionais} setResultsEmpresas={setResultsEmpresas} searchType="profissional" />
       <div className="results-container">
         <h2 className='results-h2'>Profissionais</h2>
-        {profissionaisParaRenderizar.length > 0 ? (
+        {console.log("Profissionais para renderizar: ", profissionaisParaRenderizar)
+        }        {profissionaisParaRenderizar.length > 0 ? (
           <ul>
             {profissionaisParaRenderizar.map((profissional) => (
               <li key={profissional.id}>
