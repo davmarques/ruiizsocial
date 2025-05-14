@@ -15,7 +15,6 @@ const get = async (endpoint, filtros = {}) => {
 const getEmpresas = async (filtros) => get("empresas", filtros);
 
 const getProfissionais = async (filtros) => {
-    // Lógica de tratamento do filtro de CEP próximo será feita no backend
     return get("profissional", filtros);
 };
 

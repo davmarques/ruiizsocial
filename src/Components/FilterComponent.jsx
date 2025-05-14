@@ -72,22 +72,6 @@ const FilterComponent = ({ setResultsProfissionais, setResultsEmpresas, searchTy
         ],
     });
 
-    const [cepFilter, setCepFilter] = useState('');
-
-    const handleCepInputChange = (event) => {
-        const value = event.target.value.replace(/\D/g, '');
-        setCepFilter(value);
-        setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            if (value) {
-                newParams.set('cep', value);
-            } else {
-                newParams.delete('cep');
-            }
-            return newParams;
-        });
-    };
-
     const fetchData = async (filtros) => {
         let endpoint = '';
         let setResultsFunction = null;
@@ -156,22 +140,11 @@ const FilterComponent = ({ setResultsProfissionais, setResultsEmpresas, searchTy
         <div className='filter-div'>
             {searchType === 'profissional' && (
                 <>
-                    <Filter key="estado" label={formatFilterName("estado")} options={filterOptions.estado} onChange={(value) => handleFilterChange("estado", value)} />
+                    {/* {<Filter key="estado" label={formatFilterName("estado")} options={filterOptions.estado} onChange={(value) => handleFilterChange("estado", value)} />}*/}
                     <Filter key="especialidade" label={formatFilterName("especialidade")} options={filterOptions.especialidade} onChange={(value) => handleFilterChange("especialidade", value)} />
                     <Filter key="atendimento" label={formatFilterName("atendimento")} options={filterOptions.atendimento} onChange={(value) => handleFilterChange("atendimento", value)} />
                     <Filter key="valor" label={formatFilterName("valor")} options={filterOptions.valor} onChange={(value) => handleFilterChange("valor", value)} />
                     <Filter key="genero" label={formatFilterName("genero")} options={filterOptions.genero} onChange={(value) => handleFilterChange("genero", value)} />
-
-                    <div className="filter-item">
-                        <label htmlFor="cepProximo">Filtrar por CEP Próximo:</label>
-                        <input
-                            type="number"
-                            id="cepProximo"
-                            value={cepFilter}
-                            onChange={handleCepInputChange}
-                            placeholder="Digite o CEP"
-                        />
-                    </div>
                 </>
             )}
             {searchType === 'empresa' && (

@@ -96,12 +96,7 @@ const FormEmpresa = () => {
         formData.append('servico', servico);
 
         try {
-            // Atualize a URL para o endpoint correto da sua nova API
-            const response = await api.post('/empresas/cadastrar', formData, { // Novo endpoint
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            const response = await api.postEmpresa(formData);
             console.log('Empresa cadastrada com sucesso: ', response.data);
             setEmpresa('');
             setTipo('');

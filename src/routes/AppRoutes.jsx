@@ -3,19 +3,16 @@ import Home from "../pages/Home"
 import Paciente from "../pages/Paciente"
 import Profissional from "../pages/Profissional"
 import Laboratorios from "../pages/Laboratorios";
-import Login from "../pages/Login";
+import SearchLoading from "../pages/SearchLoading";
 
 const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/paciente" element={<Paciente />} />
+            <Route path="/searchLoading" element={<SearchLoading />} />
             <Route path="/profissional" element={<Profissional />} />
             <Route path="/laboratorios" element={<Laboratorios />} />
-            <Route path="/login" element={<Login />} />
-
-            
-
+            <Route path="/Paciente" element={<Paciente />} />
         </Routes>
     )
 }

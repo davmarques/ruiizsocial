@@ -16,6 +16,16 @@
     box-sizing: border-box;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 header {
     display: flex;
     align-items: center;
@@ -479,8 +489,6 @@ footer {
     }
 }
 
-.filter-select {}
-
 .results-container {
 
     & .results-h2 {
@@ -489,7 +497,7 @@ footer {
         justify-content: center;
         font-family: "Open Sans";
         font-weight: 400;
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     & .results-p {
@@ -499,6 +507,59 @@ footer {
         font-family: "Open Sans";
         font-weight: 400;
         font-size: 1rem;
+    }
+}
+
+.results-p {
+    margin: 1rem 0 4rem 0;
+}
+
+.searchCEP-form {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    margin: 10rem auto;
+    gap: 2rem;
+    font-family: 'Raleway';
+
+    & h1 {
+        font-weight: 600;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    & input {
+        margin: auto;
+        padding: 1rem;
+        width: 35vw;
+        border: 1px solid var(--bg-color2);
+        border-radius: 12px;
+        color: var(--text-color);
+        background-color: var(--bg-color1);
+        font-size: 1.2rem;
+
+    }
+
+    & button {
+        font-family: "Open Sans";
+        background-color: var(--btn-color2);
+        color: var(--bg-color1);
+        font-size: 1.6rem;
+        padding: 1.4rem 1rem;
+        border-radius: 12px;
+        border: none;
+        width: 25vw;
+        grid-column: span 2;
+        margin: auto;
+
+        &:hover {
+            color: var(--btn-color1);
+            background-color: var(--bg-color2);
+            cursor: pointer;
+            transition: all ease .3s;
+        }
+
+
     }
 }
 

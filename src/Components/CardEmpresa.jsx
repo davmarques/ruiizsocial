@@ -25,7 +25,7 @@ const CardEmpresa = ({ empresa }) => {
     }
 
     // Determine a URL da imagem (use uma imagem padrão para empresas)
-    const imageUrl = empresa.foto ? `http://backendruiizsocial.render.com/profissional/upload/${empresa.foto}` : Profile;
+    const imageUrl = empresa.foto ? `http://backendruiizsocial.onrender.com/${empresa.foto}` : Profile;
 
     return (
         <>

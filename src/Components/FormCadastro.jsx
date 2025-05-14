@@ -124,7 +124,6 @@ const FormCadastro = () => {
             }
         } catch (error) {
             console.error("Erro no envio:", error);
-            alert("Erro ao enviar cadastro.");
         } finally {
             setIsLoading(false); // Finaliza carregamento
         }
